@@ -1,11 +1,16 @@
 # node-gphoto2
 
+This is a fork of lwille/node-gphoto2 with some fixes in build.gyp file to actually use pkg-config for configuring location of libgphoto2 libraries and headers, and some changes to src/camera_helpers.cc to include readonly
+flags in settings request.
+
 [![Build Status](https://travis-ci.org/lwille/node-gphoto2.svg?branch=master)](https://travis-ci.org/lwille/node-gphoto2)
 [![NPM version](https://badge.fury.io/js/gphoto2.svg)](http://badge.fury.io/js/gphoto2)
 
 [Become a Patron](https://www.patreon.com/lwille)
 
 A Node.js wrapper for [libgphoto2](http://www.gphoto.org). Useful for remote controlling of DSLRs and other digital cameras supported by [gphoto2](http://www.gphoto.org).
+
+
 
 The included test application currently allows you to
 

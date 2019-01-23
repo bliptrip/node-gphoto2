@@ -54,7 +54,7 @@ v8::Local<v8::Value> GPCamera::getWidgetValue(GPContext *context, CameraWidget *
   Nan::EscapableHandleScope scope;
   const char *label;
   CameraWidgetType  type;
-  int ret;
+  int ret, ro = 0;
   v8::Local<v8::Object> value = Nan::New<v8::Object>();
 
   ret = gp_widget_get_type(widget, &type);
@@ -65,6 +65,20 @@ v8::Local<v8::Value> GPCamera::getWidgetValue(GPContext *context, CameraWidget *
   value->Set(Nan::New("label").ToLocalChecked(), Nan::New(label).ToLocalChecked());
   value->Set(Nan::New("type").ToLocalChecked(), Nan::Undefined());
 
+  ret = gp_widget_get_readonly(widget, &ro);
+  if( ret == GP_OK ) {
+      if( ro ) {
+        value->Set(Nan::New("readonly").ToLocalChecked(), Nan::New((bool)true));
+      } else {
+        value->Set(Nan::New("readonly").ToLocalChecked(), Nan::New((bool)false));
+      }
+  } else {
+      gp_context_error(context,
+                       "Failed to retrieve readonly status of text widget %s.",
+                       label);
+
+  }
+    
   switch (type) {
   case GP_WIDGET_TEXT: { /* char * */
     char *txt;
